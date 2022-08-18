@@ -1,0 +1,26 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="/css/shop.css")
+        // use block here to render dynamic layouts based on hook name assigned (in this case is styles)
+        block styles
+        // JS template syntax is ${ any JS codes } but in Pug, the template syntax is #{ any JS codes }
+        // docTitle and products, both object passed from shop.js directly to this Pug template
+        title #{ docTitle }    
+    body 
+        header.main-header
+            nav.main-header__nav
+                ul.main-header__item-list
+                    li.main-header__item
+                        a(href="/", class=(docTitle==='Shop' ? 'active' : '')) Shop
+                    li.main-header__item
+                        a(href="/admin/add-product", class=(docTitle==='Add Product' ? 'active' : '')) Add-Product
+                        // Line 18 & 20 => adding dynamic 'active' class binding based on which page is active
+                        // alternatively, also can use conditions using path key which is part of the dynamic data sent in
+                        // from shop.js and admins.js for rendering for class binding replacing docTitle
+        main
+            // use block here to render dynamic layouts based on hook name assigned (in this case is content)
+            block content

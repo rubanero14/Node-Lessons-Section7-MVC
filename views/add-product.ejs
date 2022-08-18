@@ -1,0 +1,17 @@
+<%- include('includes/head.ejs') %>
+
+<link rel="stylesheet" href="/css/add-product.css">
+</head>
+
+<%- include('includes/navigation.ejs') %>
+
+    <form class="product-form" action="/admin/add-product" method="POST">
+        <div class="form-control">
+            <div class="nest">
+                <input placeholder="Enter product name.." type="text" name="title" id="title"/>
+                <input class="btn" type="submit" value="Add Product">
+            </div>
+        </div>
+    </form>
+    
+<%- include('includes/end.ejs') %>

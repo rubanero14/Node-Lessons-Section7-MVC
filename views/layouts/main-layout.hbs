@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/shop.css">
+    <!-- For conditional rendering HTML elements -->
+    {{#if isProduct}}
+        <link rel="stylesheet" href="/css/add-product.css">
+    {{/if}}
+    <title>{{ docTitle }}</title>
+</head>
+<body>
+    <header class="main-header">
+        <nav class="main-header__nav">
+            <ul class="main-header__item-list">
+                <li class="main-header__item">
+                    <!-- For conditional rendering CSS classes, can be written in-line -->
+                    <a class="{{#if isShop}}active{{/if}}" href="/">Shop</a>
+                </li>
+                <li class="main-header__item">
+                    <!-- For conditional rendering CSS classes -->
+                    <a class="{{#if isProduct}}active{{/if}}" href="/admin/add-product">Add-Product</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <!-- For component template rendering, need to use triple curly braces followed by the body syntax -->
+    {{{ body }}}
+</body>
+</html>
