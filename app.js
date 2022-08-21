@@ -7,7 +7,8 @@ const PORT = 3000;
 const app = express();
 
 const adminRoutes = require('./routes/admin');
-const shopRouter = require('./routes/shop');
+const shopRoutes = require('./routes/shop');
+const pageNotFoundController = require('./controllers/404')
 
 // EJS Template Engine Section
 /*
@@ -22,9 +23,12 @@ app.set('view engine','ejs');
 */
 app.set('views','views');
 
+// Initiate and use middlewares here
+app.use(bodyParser.urlencoded({extended: false}));
+
 // using outsourced routes from admin.js/shop.js into app.js
-app.use('/admin', adminRoutes.routes);
-app.use(shopRouter);
+app.use('/admin', adminRoutes);
+app.use(shopRoutes);
 
 /* 
     This middleware enables serving static files eg: main.css files to browser.
@@ -34,12 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 
 // middleware for catching all routes not registered/used and display error 404 message to browser
-app.use((req,res,next) => {
-    res.status(404).render('404', {
-        docTitle: '404: Page Not Found',
-        path: undefined,
-    });
-});
+app.use(pageNotFoundController.notFoundPage);
 
 // Listen to server short-hand
 app.listen(PORT);
