@@ -5,7 +5,9 @@
  */
 
 // Initiate global variable to store and pass data across middleware/routes
-const products = [];
+// const products = [];
+
+const Product = require('../models/product');
 
 exports.getAddProductPage = (req, res, next) => {
     res.render('add-product', {
@@ -17,13 +19,13 @@ exports.getAddProductPage = (req, res, next) => {
 
 exports.postAddNewProductPage = (req, res, next) => {
     console.log(req.body);
-    products.push({
-        title: req.body.title,
-    })
+    const product = new Product(req.body.title);
+    product.save();
     res.redirect('/');
 }
 
-exports.getProductsPage = (req, res, next) => {  
+exports.getProductsPage = (req, res, next) => { 
+    const products = Product.fetchAll(); 
     // Injecting pug file to browser for rendering and passing dynamic data into object as 2nd arguement to be rendered there
     res.render('shop', {
       // passing data as key:value pair with key name can be assigned any name and easier to identify
