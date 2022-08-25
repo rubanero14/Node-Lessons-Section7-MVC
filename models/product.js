@@ -39,14 +39,19 @@ module.exports = class Product {
         });
     }
 
-    static fetchAll(){
+    // since fs is async code, we need to pass a cb or anonymous fn to return promises in the form of product
+    // this is work-around solution since earlier templates not receiving products array and returned undefined in templates
+    // with this, we guarantee, the templates will receive products array as promised
+    static fetchAll(customCallBack){
         const fileName = path.join(root, 'data', 'products.json');
         // read the file contents and export it as JS object data
         fs.readFile(fileName, (error, content) => {
             if(error && content.length < 1){
-                return [];
+                // return [];
+                return customCallBack([]);
             }
-            return JSON.parse(content);
+            // return JSON.parse(content);
+            return customCallBack(JSON.parse(content));
         });
         // to access variable outside class, omit this keyword
         // return products;

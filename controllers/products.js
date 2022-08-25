@@ -25,16 +25,31 @@ exports.postAddNewProductPage = (req, res, next) => {
 }
 
 exports.getProductsPage = (req, res, next) => { 
-    const products = Product.fetchAll(); 
-    // Injecting pug file to browser for rendering and passing dynamic data into object as 2nd arguement to be rendered there
-    res.render('shop', {
-      // passing data as key:value pair with key name can be assigned any name and easier to identify
-      products: products,
-      docTitle: 'Shop',
-      path: '/',
-      isShop: true,
-      // This boolean property is needed for conditional rendering in handlebars template, since the template dont handle JS codes
-      // but accepts boolean values 
-      hasProducts: products.length > 0,
-    });
+    // const products = await Product.fetchAll(); 
+    // // Injecting pug file to browser for rendering and passing dynamic data into object as 2nd arguement to be rendered there
+    // res.render('shop', {
+    //     // passing data as key:value pair with key name can be assigned any name and easier to identify
+    //     products: products,
+    //     docTitle: 'Shop',
+    //     path: '/',
+    //     isShop: true,
+    //     // This boolean property is needed for conditional rendering in handlebars template, since the template dont handle JS codes
+    //     // but accepts boolean values 
+    //     hasProducts: products.length > 0,
+    // });
+
+    // since we are getting products array from models/products.js in the callback function below therefore we dont need to declare
+    // products variable as above
+    Product.fetchAll( products => {
+        res.render('shop', {
+          // passing data as key:value pair with key name can be assigned any name and easier to identify
+          products: products,
+          docTitle: 'Shop',
+          path: '/',
+          isShop: true,
+          // This boolean property is needed for conditional rendering in handlebars template, since the template dont handle JS codes
+          // but accepts boolean values 
+          hasProducts: products.length > 0,
+        });
+    }); 
   }
