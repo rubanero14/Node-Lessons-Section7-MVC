@@ -9,28 +9,6 @@
 
 const Product = require('../models/product');
 
-exports.getAddProductPage = (req, res, next) => {
-    res.render('admin/add-product', {
-        docTitle: 'Add Product',
-        path: '/admin/add-product',
-        isProduct: true,
-    })
-}
-
-exports.postAddNewProductPage = (req, res, next) => {
-    console.log(req.body);
-    const product = new Product(req.body.title);
-    product.save();
-    res.redirect('/');
-}
-
-exports.adminProducts = (req, res, next) => {
-    res.render('admin/products', {
-        docTitle: 'Admin Products',
-        path: '/admin/products',
-    });
-};
-
 exports.getProductsPage = (req, res, next) => { 
     // const products = await Product.fetchAll(); 
     // // Injecting pug file to browser for rendering and passing dynamic data into object as 2nd arguement to be rendered there
@@ -51,26 +29,36 @@ exports.getProductsPage = (req, res, next) => {
         res.render('shop/product-list', {
           // passing data as key:value pair with key name can be assigned any name and easier to identify
           products: products,
-          docTitle: 'Shop',
-          path: '/',
-          isShop: true,
-          // This boolean property is needed for conditional rendering in handlebars template, since the template dont handle JS codes
-          // but accepts boolean values 
-          hasProducts: products.length > 0,
+          docTitle: 'All Products',
+          path: '/products',
+        //   isShop: true,
+        //   // This boolean property is needed for conditional rendering in handlebars template, since the template dont handle JS codes
+        //   // but accepts boolean values 
+        //   hasProducts: products.length > 0,
         });
     });
-    
-    exports.cart = (req, res, next) => {
-        res.render('cart', {
-            docTitle: 'Cart',
-            path: '/cart',
-        });
-    };
+  };
 
-    exports.products = (req, res, next) => {
-        res.render('products', {
-            docTitle: 'Products',
-            path: '/products',
+  exports.getIndex = (req, res, next) => {
+    Product.fetchAll( products => {
+        res.render('shop/index', {
+          products: products,
+          docTitle: 'Shop',
+          path: '/',
         });
-    };
-  }
+    });
+};
+
+exports.getCart = (req, res, next) => {
+    res.render('shop/cart', {
+        docTitle: 'Your Cart',
+        path: '/cart',
+    });
+};
+
+exports.getCheckout = (req, res, next) => {
+    res.render('shop/checkout', {
+        docTitle: 'Checkout',
+        path: '/checkout',
+    });
+};
