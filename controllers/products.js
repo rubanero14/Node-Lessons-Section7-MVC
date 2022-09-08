@@ -24,6 +24,13 @@ exports.postAddNewProductPage = (req, res, next) => {
     res.redirect('/');
 }
 
+exports.adminProducts = (req, res, next) => {
+    res.render('admin/products', {
+        docTitle: 'Admin Products',
+        path: '/admin/products',
+    });
+};
+
 exports.getProductsPage = (req, res, next) => { 
     // const products = await Product.fetchAll(); 
     // // Injecting pug file to browser for rendering and passing dynamic data into object as 2nd arguement to be rendered there
@@ -51,5 +58,19 @@ exports.getProductsPage = (req, res, next) => {
           // but accepts boolean values 
           hasProducts: products.length > 0,
         });
-    }); 
+    });
+    
+    exports.cart = (req, res, next) => {
+        res.render('cart', {
+            docTitle: 'Cart',
+            path: '/cart',
+        });
+    };
+
+    exports.products = (req, res, next) => {
+        res.render('products', {
+            docTitle: 'Products',
+            path: '/products',
+        });
+    };
   }
