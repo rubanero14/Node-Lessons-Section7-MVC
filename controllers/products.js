@@ -10,7 +10,7 @@
 const Product = require('../models/product');
 
 exports.getAddProductPage = (req, res, next) => {
-    res.render('add-product', {
+    res.render('admin/add-product', {
         docTitle: 'Add Product',
         path: '/admin/add-product',
         isProduct: true,
@@ -41,7 +41,7 @@ exports.getProductsPage = (req, res, next) => {
     // since we are getting products array from models/products.js in the callback function below therefore we dont need to declare
     // products variable as above
     Product.fetchAll( products => {
-        res.render('shop', {
+        res.render('shop/product-list', {
           // passing data as key:value pair with key name can be assigned any name and easier to identify
           products: products,
           docTitle: 'Shop',
