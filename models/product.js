@@ -24,16 +24,18 @@ const getProductsFromFile = (cb) => {
 
 // Structure and export this model as reusable class
 module.exports = class Product {
-    constructor(title){
+    constructor(title, imageUrl, description, price){
         // to access variable inside class, include this keyword
         this.title = title;
+        this.imageUrl = imageUrl;
+        this.description = description;
+        this.price = price;
     }
 
     save(){
         getProductsFromFile(products => {
             // add new changes in user input data into products variable
             products.push(this);
-            
             // convert JS object into JSON and store into file 
             fs.writeFile(fileName, JSON.stringify(products), (error) => {
                 console.log(error);

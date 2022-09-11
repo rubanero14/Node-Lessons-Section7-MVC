@@ -1,7 +1,7 @@
 .product-form {
     width: 20rem;
     max-width: 90%;
-    margin: auto;
+    /* margin: auto; */
 }
 
 .form-control .nest {
@@ -10,24 +10,33 @@
 }
 
 .form-control .nest label,
-.form-control .nest input#title {
+.form-control .nest input,
+.form-control .nest textarea,
+.form-control .btn {
     display: block;
     width: 100%;
 }
 
-.form-control .nest input {
+.form-control .nest input,
+.form-control .nest textarea {
    border: 1px solid #dbc441;
    font: inherit;
-   border-radius: 4px 0 0 4px;
+   border-radius: 4px;
    padding: 5px;
+   margin-bottom: 5px;
 }
 
-.form-control .nest .btn {
+.form-control .nest input:focus, 
+.form-control .nest textarea:focus {
+   outline-color: #dbc441;
+}
+
+.form-control .btn {
    border: 1px solid #dbc441;
    background-color: #dbc441;
    font: inherit;
    color: #222;
-   border-radius: 0 4px 4px 0;
+   border-radius: 4px;
    cursor: pointer;
    padding: 5px 10px;
 }
@@ -37,12 +46,6 @@
    border: 1px solid rgba(155, 21, 155, 0.881);
    background-color: rgba(155, 21, 155, 0.881);
    color: #dbc441;
-}
-
-.product-form {
-   width: 20rem;
-   max-width: 90%;
-   margin: auto;
 }
 
 .product-item {
