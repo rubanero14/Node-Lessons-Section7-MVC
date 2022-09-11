@@ -24,7 +24,7 @@ const getProductsFromFile = (cb) => {
 
 // Structure and export this model as reusable class
 module.exports = class Product {
-    constructor(title, imageUrl, description, price){
+    constructor(title, imageUrl, price, description){
         // to access variable inside class, include this keyword
         this.title = title;
         this.imageUrl = imageUrl;
