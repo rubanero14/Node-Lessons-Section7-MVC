@@ -31,7 +31,7 @@
    outline-color: #dbc441;
 }
 
-.form-control .btn {
+.btn {
    border: 1px solid #dbc441;
    background-color: #dbc441;
    font: inherit;
@@ -39,10 +39,12 @@
    border-radius: 4px;
    cursor: pointer;
    padding: 5px 10px;
+   text-decoration: none;
+   text-align: center;
 }
 
-.nest .btn:active,
-.nest .btn:hover {
+.btn:active,
+.btn:hover {
    border: 1px solid rgba(155, 21, 155, 0.881);
    background-color: rgba(155, 21, 155, 0.881);
    color: #dbc441;
