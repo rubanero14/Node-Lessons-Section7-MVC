@@ -1,7 +1,6 @@
 .product-form {
     width: 20rem;
     max-width: 90%;
-    /* margin: auto; */
 }
 
 .form-control .nest {
@@ -71,4 +70,20 @@
 
 .product__description {
    text-align: center;
+}
+
+.form-control {
+   width: 25%;
+}
+
+@media screen and (max-width: 992px) {
+   .form-control {
+      width: 50%;
+   }
+}
+
+@media screen and (max-width: 576px) {
+   .form-control {
+      width: 100%;
+   }
 }

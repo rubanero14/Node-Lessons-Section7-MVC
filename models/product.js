@@ -34,6 +34,8 @@ module.exports = class Product {
 
     save(){
         getProductsFromFile(products => {
+            console.log(products.length);
+            this.id = products.length + 1;
             // add new changes in user input data into products variable
             products.push(this);
             // convert JS object into JSON and store into file 

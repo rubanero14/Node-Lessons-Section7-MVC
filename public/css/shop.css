@@ -172,15 +172,35 @@ form {
 }
 
 .card__actions {
-  text-align: center;
+  display: flex;
+}
+
+.card__actions form {
+  display: contents;
 }
 
 .card__actions button,
 .card__actions a {
-  width: 100%;
   border-radius: 0;
   padding: 10px 0;
   font-size: 1.3rem;
+  display: inline-block;
+}
+
+.card__actions a {
+  border-right: 1px solid #999;
+}
+
+.w-25 {
+  width: 25%;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+.w-100 {
+  width: 100%;
 }
   
   @media (min-width: 768px) {
