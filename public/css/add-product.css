@@ -53,6 +53,9 @@
 .product-item {
    width: 20rem;
    max-width: 95%;
+   margin: 20px 0 5px;
+   min-height: 400px;
+   height: fit-content;
 }
 
 .product__title {
