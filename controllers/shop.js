@@ -27,24 +27,30 @@ exports.getProductsPage = (req, res, next) => {
     // products variable as above
     Product.fetchAll( products => {
         res.render('shop/product-list', {
-          // passing data as key:value pair with key name can be assigned any name and easier to identify
-          products: products,
-          docTitle: 'All Products',
-          path: '/products',
+            // passing data as key:value pair with key name can be assigned any name and easier to identify
+            products: products,
+            docTitle: 'All Products',
+            path: '/products',
         //   isShop: true,
         //   // This boolean property is needed for conditional rendering in handlebars template, since the template dont handle JS codes
         //   // but accepts boolean values 
         //   hasProducts: products.length > 0,
         });
     });
-  };
+};
 
-  exports.getIndex = (req, res, next) => {
+exports.getProduct = (req, res, next) => {
+    const PRODUCT_ID = req.params.productId;
+    console.log(PRODUCT_ID);
+    res.redirect('/');
+};
+
+exports.getIndex = (req, res, next) => {
     Product.fetchAll( products => {
         res.render('shop/index', {
-          products: products,
-          docTitle: 'Shop',
-          path: '/',
+            products: products,
+            docTitle: 'Shop',
+            path: '/',
         });
     });
 };

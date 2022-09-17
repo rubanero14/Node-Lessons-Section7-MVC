@@ -16,6 +16,9 @@ router.get("/orders", shopController.getOrders);
 // Registering Products page route
 router.get("/products", shopController.getProductsPage);
 
+// Registering get Product Details page route
+router.get("/products/:productId", shopController.getProduct);
+
 // Registering Checkout page route
 router.get("/checkout", shopController.getCheckout);
 
