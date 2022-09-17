@@ -68,12 +68,19 @@ module.exports = class Product {
         //         console.log(error);
         //     });
         // });
-    }
+    };
 
     // since fs is async code, we need to pass a cb or anonymous fn to return promises in the form of product
     // this is work-around solution since earlier templates not receiving products array and returned undefined in templates
     // with this, we guarantee, the templates will receive products array as promised
     static fetchAll(customCallBack){
         getProductsFromFile(customCallBack);
-    }
+    };
+
+    static findById(id, customCallBack){
+        getProductsFromFile(products => {
+            const product = products.find(product => product.id === +id);
+            customCallBack(product);
+        });
+    };
 }

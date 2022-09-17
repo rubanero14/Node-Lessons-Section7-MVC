@@ -25,7 +25,7 @@ exports.getProductsPage = (req, res, next) => {
 
     // since we are getting products array from models/products.js in the callback function below therefore we dont need to declare
     // products variable as above
-    Product.fetchAll( products => {
+    Product.fetchAll(products => {
         res.render('shop/product-list', {
             // passing data as key:value pair with key name can be assigned any name and easier to identify
             products: products,
@@ -40,8 +40,10 @@ exports.getProductsPage = (req, res, next) => {
 };
 
 exports.getProduct = (req, res, next) => {
-    const PRODUCT_ID = req.params.productId;
-    console.log(PRODUCT_ID);
+    const productId = req.params.productId;
+    Product.findById(productId, product => {
+        console.log(product);
+    });
     res.redirect('/');
 };
 
