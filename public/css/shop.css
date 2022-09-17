@@ -27,6 +27,10 @@ img {
   max-width: 600px;
 }
 
+.product-detail img {
+  border-radius: 16px;
+}
+
 .centered {
   text-align: center;
 }
