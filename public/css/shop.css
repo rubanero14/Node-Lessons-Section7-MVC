@@ -19,6 +19,14 @@ form {
   display: inline;
 }
 
+img {
+  max-width: 400px;
+}
+
+.product-detail hr {
+  max-width: 600px;
+}
+
 .centered {
   text-align: center;
 }
