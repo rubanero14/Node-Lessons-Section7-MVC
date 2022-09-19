@@ -172,6 +172,14 @@ img {
   padding: 1rem;
 }
 
+.card__content {
+  min-height: 200px;
+}
+
+.card__header {
+  height: 100px;
+}
+
 .card__header h1,
 .card__content h1,
 .card__content h2,
@@ -184,6 +192,7 @@ img {
 }
 
 .card__image img {
+  height: 300px;
   width: 100%;
 }
 

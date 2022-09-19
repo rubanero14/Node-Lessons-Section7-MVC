@@ -9,10 +9,11 @@
     <div>
         <img src="<%= product.imageUrl %>" alt="<%= product.imageUrl %>"/>
     </div>
-    <h2><%= product.price %></h2>
+    <h2>$<%= Number(product.price).toFixed(2) %></h2>
     <p><%= product.description %></p>
-    <form action="/cart" method="POST">
+    <form action="/cart/<%= product.id %>" method="POST">
         <button class="btn" type="submit">Add to Cart</button>
+        <input type="hidden" name="productId" value="<%= product.id %>">
     </form>
 </main>
 

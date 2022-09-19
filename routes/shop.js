@@ -10,6 +10,12 @@ router.get("/", shopController.getIndex);
 // Registering Cart page route
 router.get("/cart", shopController.getCart);
 
+// Registering Cart page route
+router.get("/cart/:productId", shopController.postCart);
+
+// Registering Cart page route
+router.post("/cart/:productId", shopController.postCart);
+
 // Registering Orders page route
 router.get("/orders", shopController.getOrders);
 

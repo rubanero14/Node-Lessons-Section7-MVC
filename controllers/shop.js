@@ -67,6 +67,17 @@ exports.getCart = (req, res, next) => {
     });
 };
 
+exports.postCart = (req, res, next) => {
+    const productId = req.body.productId;
+    Product.findById(productId, product => {
+        res.render(`shop/cart`, {
+            product: product,
+            docTitle: 'Your Cart',
+            path: '/cart',
+        });
+    });
+};
+
 exports.getOrders = (req, res, next) => {
     res.render('shop/orders', {
         docTitle: 'Orders',
