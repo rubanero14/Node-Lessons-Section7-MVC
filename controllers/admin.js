@@ -4,10 +4,9 @@
 const Product = require('../models/product');
 
 exports.getAddProductPage = (req, res, next) => {
-    res.render('admin/add-product', {
+    res.render('admin/edit-product', {
         docTitle: 'Add Product',
         path: '/admin/add-product',
-        isProduct: true,
     })
 }
 
@@ -20,6 +19,19 @@ exports.postAddNewProductPage = (req, res, next) => {
     const product = new Product(title, imageUrl, price, description);
     product.save();
     res.redirect('/');
+}
+
+exports.getEditProductPage = (req, res, next) => {
+    // check/verify for query parameters exist using Express's req.query helper here
+    const editMode = req.query.edit;
+    
+    if(!editMode) return res.redirect('/');
+
+    res.render('admin/edit-product', {
+        docTitle: 'Edit Product',
+        path: '/admin/edit-product',
+        editing: editMode,
+    })
 }
 
 exports.getProducts = (req, res, next) => {
