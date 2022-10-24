@@ -39,7 +39,10 @@ exports.getEditProductPage = (req, res, next) => {
             product: product,
         })
     });
+}
 
+exports.postEditProducts = (req, res, next) => {
+    
 }
 
 exports.getProducts = (req, res, next) => {
