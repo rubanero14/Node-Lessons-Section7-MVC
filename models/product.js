@@ -24,8 +24,9 @@ const getProductsFromFile = (cb) => {
 
 // Structure and export this model as reusable class
 module.exports = class Product {
-    constructor(title, imageUrl, price, description){
+    constructor(id, title, imageUrl, description, price){
         // to access variable inside class, include this keyword
+        this.id = +id;
         this.title = title;
         this.imageUrl = imageUrl;
         this.description = description;
@@ -34,14 +35,25 @@ module.exports = class Product {
 
     save(){
         getProductsFromFile(products => {
-            console.log(products.length);
-            this.id = products.length + 1;
-            // add new changes in user input data into products variable
-            products.push(this);
-            // convert JS object into JSON and store into file 
-            fs.writeFile(fileName, JSON.stringify(products), (error) => {
-                console.log(error);
-            });
+            console.log("this.id: ",this.id)
+            if(this.id) {
+                const existingProductIndex =  products.findIndex(prod => prod.id === this.id);
+                const updatedProducts = [...products];
+                updatedProducts[existingProductIndex] = this; // this keyword refer to newly created product object via class Product constructor above
+
+                fs.writeFile(fileName, JSON.stringify(updatedProducts), (error) => {
+                    console.log(error);
+                });
+            } else {
+                console.log(products.length);
+                this.id = products.length + 1;
+                // add new changes in user input data into products variable
+                products.push(this);
+                // convert JS object into JSON and store into file 
+                fs.writeFile(fileName, JSON.stringify(products), (error) => {
+                    console.log(error);
+                });
+            }
         })
         // to access the whole object/class as an variable, use this keyword
         // products.push(this);

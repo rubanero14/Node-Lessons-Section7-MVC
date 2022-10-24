@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="/css/add-product.css">
 </head>
 <%- include('../includes/navigation.ejs') %>
-    <form class="product-form" action="/admin/<%- editing ? `/edit-product/product.id?edit=true`: 'add-product'%>" method="POST">
+    <form class="product-form" action="/admin/<%- editing ? `/edit-product/${product.id}?edit=true`: 'add-product' %>" method="POST">
         <div class="form-control">
             <div class="nest">
                 <input placeholder="Enter product name.." type="text" name="title" id="title" value="<%- editing ? product.title : '' %>"/>
@@ -16,6 +16,9 @@
             <div class="nest">
                 <textarea placeholder="Enter product description.." name="description" id="description" rows="5"><%- editing ? product.description : '' %></textarea>
             </div>
+            <% if(editing) { %>
+                <input type="hidden" value="<%= product.id %>" name="productId">
+            <% } %>
             <button class="btn" type="submit"><%- editing ? 'Update' : 'Add' %> Product</button>
         </div>
     </form>  
