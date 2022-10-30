@@ -5,12 +5,13 @@ const root = require('../util/path');
 // Initially empty array initialized to store user input data here, now replaced with file-system storage
 // const products = [];
 
-const fileName = path.join(root, 'data', 'products.json');
+const productJSON = path.join(root, 'data', 'products.json');
+const cartJSON = path.join(root, 'data', 'cart.json');
 
 // Create a helper function to reuse code below
 const getProductsFromFile = (cb) => {
     // read the file contents and export it as JS object data
-    fs.readFile(fileName, (error, content) => {
+    fs.readFile(productJSON, (error, content) => {
         if(error && content.length < 1){
             // return [];
             return cb([]);
@@ -41,7 +42,7 @@ module.exports = class Product {
                 const updatedProducts = [...products];
                 updatedProducts[existingProductIndex] = this; // this keyword refer to newly created product object via class Product constructor above
 
-                fs.writeFile(fileName, JSON.stringify(updatedProducts), (error) => {
+                fs.writeFile(productJSON, JSON.stringify(updatedProducts), (error) => {
                     console.log(error);
                 });
             } else {
@@ -50,7 +51,7 @@ module.exports = class Product {
                 // add new changes in user input data into products variable
                 products.push(this);
                 // convert JS object into JSON and store into file 
-                fs.writeFile(fileName, JSON.stringify(products), (error) => {
+                fs.writeFile(productJSON, JSON.stringify(products), (error) => {
                     console.log(error);
                 });
             }
@@ -60,10 +61,10 @@ module.exports = class Product {
 
         // Initiating file-system storage for user input data
         // Constructing path across all OS for storing the intiated file
-        // const fileName = path.join(root, 'data', 'products.json');
+        // const productJSON = path.join(root, 'data', 'products.json');
 
         // in order to store data into the file, first we need to read the file
-        // fs.readFile(fileName, (error, content) => {
+        // fs.readFile(productJSON, (error, content) => {
             // initiate empty array to store temp data
             // let products = [];
             
@@ -76,7 +77,7 @@ module.exports = class Product {
             // products.push(this);
             
             // convert JS object into JSON and store into file 
-        //     fs.writeFile(fileName, JSON.stringify(products), (error) => {
+        //     fs.writeFile(productJSON, JSON.stringify(products), (error) => {
         //         console.log(error);
         //     });
         // });
@@ -95,4 +96,16 @@ module.exports = class Product {
             customCallBack(product);
         });
     };
+
+    static deleteById(id){
+        getProductsFromFile(products => {
+            // using filter method to delete and return new array with filtered products
+            const updatedProducts = products.filter(product => product.id !== +id);
+            fs.writeFile(productJSON, JSON.stringify(updatedProducts), err => {
+                if(!err){
+                    getProductsFromFile(pro)
+                }
+            })
+        });
+    }
 }
