@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const root = require('../util/path');
+const Cart = require('./cart');
 
 // Initially empty array initialized to store user input data here, now replaced with file-system storage
 // const products = [];
@@ -99,11 +100,13 @@ module.exports = class Product {
 
     static deleteById(id){
         getProductsFromFile(products => {
+            const product = products.find(product => product.id === +id);
+            console.log(products)
             // using filter method to delete and return new array with filtered products
             const updatedProducts = products.filter(product => product.id !== +id);
             fs.writeFile(productJSON, JSON.stringify(updatedProducts), err => {
                 if(!err){
-                    getProductsFromFile(pro)
+                    Cart.deleteProduct(id, product.price);
                 }
             })
         });
