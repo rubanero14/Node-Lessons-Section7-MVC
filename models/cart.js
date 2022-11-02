@@ -47,7 +47,7 @@ module.exports = class Cart {
         fs.readFile(basePath, (err, fileContent) => {
             if(err) return;
 
-            const cart = {...JSON.parse(fileContent)};
+            const cart = JSON.parse(fileContent);
             // Find product to delete
             const deleteProductIndex = cart.products.findIndex(product => product.id === id);
             // Remove price from total price belongs to that product
