@@ -11,9 +11,9 @@
     </div>
     <h2>$<%= Number(product.price).toFixed(2) %></h2>
     <p><%= product.description %></p>
-    <form action="/cart/<%= product.id %>" method="POST">
-        <button class="btn" type="submit">Add to Cart</button>
+    <form action="/cart" method="POST">
         <input type="hidden" name="productId" value="<%= product.id %>">
+        <button class="btn" type="submit">Add to Cart</button>
     </form>
 </main>
 
