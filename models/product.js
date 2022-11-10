@@ -37,7 +37,7 @@ module.exports = class Product {
 
     save(){
         getProductsFromFile(products => {
-            console.log("this.id: ",this.id)
+            // console.log("this.id: ",this.id)
             if(this.id) {
                 const existingProductIndex =  products.findIndex(prod => prod.id === this.id);
                 const updatedProducts = [...products];
@@ -101,7 +101,7 @@ module.exports = class Product {
     static deleteById(id){
         getProductsFromFile(products => {
             const product = products.find(product => product.id === +id);
-            console.log(products)
+            // console.log(products)
             // using filter method to delete and return new array with filtered products
             const updatedProducts = products.filter(product => product.id !== +id);
             fs.writeFile(productJSON, JSON.stringify(updatedProducts), err => {

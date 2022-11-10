@@ -65,7 +65,6 @@ exports.getCart = (req, res, next) => {
     Cart.getCart(cart => {
         Product.fetchAll(products => {
             const cartProducts = [];
-            console.log(products)
             for(let product of products){
                 const cartProductData = cart.products.find(prd => +prd.id === product.id);
                 if(cartProductData){
@@ -91,6 +90,16 @@ exports.postCart = (req, res, next) => {
         res.redirect('/cart');
     });
 };
+
+exports.postCartDeleteProduct = (res, req, next) => {
+    console.log(req.body)
+    // const productId = req.body.productId;
+    // Product.findById(productId, product => {
+    //     Cart.deleteProduct(productId, product.price);
+    //     res.redirect('/cart')
+    // })
+    console.log('Hi')
+}
 
 exports.getOrders = (req, res, next) => {
     res.render('shop/orders', {

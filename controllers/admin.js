@@ -25,7 +25,7 @@ exports.postAddNewProductPage = (req, res, next) => {
 exports.getEditProductPage = (req, res, next) => {
     // check/verify for query parameters exist using Express's req.query helper here
     const editMode = req.query.edit;
-    console.log(req.query.edit)
+    //console.log(req.query.edit)
     if(!editMode) return res.redirect('/');
 
     const prodId = req.params.productId;

@@ -13,6 +13,9 @@ router.get("/cart", shopController.getCart);
 // Registering Cart page route
 router.post("/cart", shopController.postCart);
 
+// Registering Cart Delete Item page route
+router.post("/cart-delete-item", shopController.postCartDeleteProduct);
+
 // Registering Orders page route
 router.get("/orders", shopController.getOrders);
 
