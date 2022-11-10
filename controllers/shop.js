@@ -91,15 +91,13 @@ exports.postCart = (req, res, next) => {
     });
 };
 
-exports.postCartDeleteProduct = (res, req, next) => {
-    console.log(req.body)
-    // const productId = req.body.productId;
-    // Product.findById(productId, product => {
-    //     Cart.deleteProduct(productId, product.price);
-    //     res.redirect('/cart')
-    // })
-    console.log('Hi')
-}
+exports.postCartDeleteProduct = (req, res, next) => {
+    const productId = req.body.productId;
+    Product.findById(productId, product => {
+        Cart.deleteProduct(productId, product.price);
+        res.redirect('/cart')
+    })
+};
 
 exports.getOrders = (req, res, next) => {
     res.render('shop/orders', {
@@ -114,3 +112,4 @@ exports.getCheckout = (req, res, next) => {
         path: '/checkout',
     });
 };
+
