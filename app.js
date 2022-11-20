@@ -4,24 +4,23 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const PORT = 3000;
 
-const app = express();
-
+const pageNotFoundController = require('./controllers/404');
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
-const pageNotFoundController = require('./controllers/404')
+const db = require('./util/database');
 
+const app = express();
 // EJS Template Engine Section
 /*
-    Telling Express JS to use EJS as templating engine
-*/
-app.set('view engine','ejs');
-
-/* 
+    Telling Express JS to use EJS as templating engine,
     Telling Express to find and use HTML templates inside the views folder, in the case of the templates stored in different
     folder name, change the second arguement passed in the app.set() as the name of the folder:
     e.g.: app.set('views','templates') if the templates stored inside 'templates' folder 
 */
+app.set('view engine','ejs');
 app.set('views','views');
+
+db.execute('SELECT * FROM products');
 
 // Initiate and use middlewares here
 app.use(bodyParser.urlencoded({extended: false}));
