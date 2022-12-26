@@ -1,13 +1,13 @@
-const path = require('path');
+const path = require("path");
 
-const express = require('express');
-const bodyParser = require('body-parser');
+const express = require("express");
+const bodyParser = require("body-parser");
 const PORT = 3000;
 
-const pageNotFoundController = require('./controllers/404');
-const adminRoutes = require('./routes/admin');
-const shopRoutes = require('./routes/shop');
-const db = require('./util/database');
+const pageNotFoundController = require("./controllers/404");
+const adminRoutes = require("./routes/admin");
+const shopRoutes = require("./routes/shop");
+const db = require("./util/database");
 
 const app = express();
 // EJS Template Engine Section
@@ -17,30 +17,21 @@ const app = express();
     folder name, change the second arguement passed in the app.set() as the name of the folder:
     e.g.: app.set('views','templates') if the templates stored inside 'templates' folder 
 */
-app.set('view engine','ejs');
-app.set('views','views');
-
-db.execute('SELECT * FROM products')
-    .then(result => {
-        console.log(result[0], result[1]);
-    })
-    .catch(err => {
-        console.log(err);
-    });
+app.set("view engine", "ejs");
+app.set("views", "views");
 
 // Initiate and use middlewares here
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // using outsourced routes from admin.js/shop.js into app.js
-app.use('/admin', adminRoutes);
+app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 
 /* 
     This middleware enables serving static files eg: main.css files to browser.
     Basically, granting read access to the browser on the folder name passed in as the arguement below
 */
-app.use(express.static(path.join(__dirname, 'public')))
-
+app.use(express.static(path.join(__dirname, "public")));
 
 // middleware for catching all routes not registered/used and display error 404 message to browser
 app.use(pageNotFoundController.notFoundPage);
