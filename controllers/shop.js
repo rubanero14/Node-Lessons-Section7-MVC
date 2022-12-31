@@ -50,25 +50,27 @@ exports.getIndex = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
   Cart.getCart((cart) => {
-    Product.fetchAll((products) => {
-      const cartProducts = [];
-      for (let product of products) {
-        const cartProductData = cart.products.find(
-          (prd) => +prd.id === product.id
-        );
-        if (cartProductData) {
-          cartProducts.push({
-            productData: product,
-            qty: cartProductData.qty,
-          });
+    Product.fetchAll()
+      .then(([rows, fieldData]) => {
+        const cartProducts = [];
+        for (const product of rows) {
+          const cartProductData = cart.products.find(
+            (prd) => +prd.id === product.id
+          );
+          if (cartProductData) {
+            cartProducts.push({
+              productData: product,
+              qty: cartProductData.qty,
+            });
+          }
         }
-      }
-      res.render("shop/cart", {
-        docTitle: "Your Cart",
-        path: "/cart",
-        products: cartProducts,
-      });
-    });
+        res.render("shop/cart", {
+          docTitle: "Your Cart",
+          path: "/cart",
+          products: cartProducts,
+        });
+      })
+      .catch((err) => console.log(err));
   });
 };
 

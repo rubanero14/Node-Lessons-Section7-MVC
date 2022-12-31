@@ -1,7 +1,7 @@
 // Initiate global variable to store and pass data across middleware/routes
 // const products = [];
 
-const Product = require("../models/product").default;
+const Product = require("../models/product");
 
 exports.getAddProductPage = (req, res, next) => {
   res.render("admin/edit-product", {
@@ -59,13 +59,15 @@ exports.postEditProductPage = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll((products) => {
-    res.render("admin/products", {
-      products: products,
-      docTitle: "Admin Products",
-      path: "/admin/products",
-    });
-  });
+  Product.fetchAll()
+    .then(([rows, fieldData]) => {
+      res.render("admin/products", {
+        products: rows,
+        docTitle: "Admin Products",
+        path: "/admin/products",
+      });
+    })
+    .catch((err) => console.log(err));
 };
 
 exports.postDeleteProduct = (req, res, next) => {
