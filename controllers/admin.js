@@ -11,15 +11,19 @@ exports.getAddProductPage = (req, res, next) => {
   });
 };
 
-exports.postAddNewProductPage = (req, res, next) => {
-  // console.log(req.body);
+exports.postAddNewProductPage = async (req, res, next) => {
   const title = req.body.title;
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
   const product = new Product(null, title, imageUrl, description, price);
-  product.save();
-  res.redirect("/");
+
+  try {
+    await product.save();
+    res.redirect("/");
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 exports.getEditProductPage = (req, res, next) => {
