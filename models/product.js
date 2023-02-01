@@ -30,7 +30,9 @@ module.exports = class Product {
     return db.execute("SELECT * FROM products");
   }
 
-  static findById(id, customCallBack) {}
+  static findById(id) {
+    return db.execute(`SELECT * FROM products WHERE products.id = ?`, [id]);
+  }
 
   static deleteById(id) {}
 };
