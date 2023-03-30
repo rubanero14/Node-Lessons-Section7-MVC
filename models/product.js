@@ -1,38 +1,32 @@
-const db = require("../util/database");
-const Cart = require("./cart");
+const Sequelize = require("sequelize");
 
-// Structure and export this model as reusable class
-module.exports = class Product {
-  constructor(id, title, imageUrl, description, price) {
-    // to access variable inside class, include this keyword
-    this.id = id;
-    this.title = title;
-    this.imageUrl = imageUrl;
-    this.description = description;
-    this.price = +price;
-  }
+// importing database connection pool
+const sequelize = require("../util/database");
 
-  // Save new data into DB
-  save() {
-    /*
-        1. Using ? replacing the values in VALUES () is to avoid SQL injection, adding extra layer of protection
-        2. execute() takes in 2 params, where first is SQL query string and the second one is Array of dynamic data we wish to inject or save matching the table columns
-        3. Reminder the 2nd param into execute() must be an Array, to bind the values into the table
-    */
-    return db.execute(
-      "INSERT INTO products (title, price, description, imageUrl) VALUES (?, ?, ?, ?)",
-      [this.title, this.price, this.description, this.imageUrl]
-    );
-  }
+// Initializing database model for Product, with model name normally is lowercase in naming convention
+// model is defined by using .define() where it takes 2 args, model name and structure of the model defined inside JS object
+const Product = sequelize.define("product", {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true,
+  },
+  title: {
+    type: Sequelize.STRING,
+  },
+  price: {
+    type: Sequelize.DOUBLE,
+    allowNull: false,
+  },
+  imageUrl: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  description: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
 
-  // Get all from DB
-  static fetchAll() {
-    return db.execute("SELECT * FROM products");
-  }
-
-  static findById(id) {
-    return db.execute(`SELECT * FROM products WHERE products.id = ?`, [id]);
-  }
-
-  static deleteById(id) {}
-};
+module.exports = Product;
