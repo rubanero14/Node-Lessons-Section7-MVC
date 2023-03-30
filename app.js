@@ -7,7 +7,7 @@ const PORT = 3000;
 const pageNotFoundController = require("./controllers/404");
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
-const db = require("./util/database");
+const sequelize = require("./util/database");
 
 const app = express();
 // EJS Template Engine Section
@@ -36,6 +36,15 @@ app.use(express.static(path.join(__dirname, "public")));
 // middleware for catching all routes not registered/used and display error 404 message to browser
 app.use(pageNotFoundController.notFoundPage);
 
-// Listen to server short-hand
-app.listen(PORT);
-console.log(`Server online at http://localhost:${PORT}`);
+// This code using .sync() translates the model I have defined in database model section in JS object, into SQL table
+sequelize
+  .sync()
+  .then((result) => {
+    // console.log(result);
+    // Listen to server short-hand
+    app.listen(PORT);
+    console.log(`Server online at http://localhost:${PORT}`);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
