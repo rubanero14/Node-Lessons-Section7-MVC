@@ -1,11 +1,10 @@
-const mysql = require('mysql2');
+const { Sequelize } = require("sequelize");
 
-// createPool allows multiple connection to db thus enhancing the performance, than employing createConnection which only allows single connection
-const pool = mysql.createPool({
-    host: 'localhost', // Define where server running
-    user: 'root', // DB username 
-    password: '1234', // DB password
-    database: 'node-lesson', // DB schema name
+// This area is database connection setup
+// Sequelize constructor takes in 4 args, where it includes database schema name, database id and password and the last args is an object with relevant configs
+const sequelize = new Sequelize("node-lesson", "root", "1234", {
+  dialect: "mysql",
+  host: "localhost",
 });
 
-module.exports = pool.promise()
+module.exports = sequelize;
