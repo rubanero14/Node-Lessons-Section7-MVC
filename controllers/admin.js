@@ -16,14 +16,14 @@ exports.postAddNewProductPage = async (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  const product = new Product(null, title, imageUrl, description, price);
-
-  try {
-    await product.save();
-    res.redirect("/");
-  } catch (err) {
-    console.log(err);
-  }
+  Product.create({
+    title,
+    imageUrl,
+    price,
+    description,
+  })
+    .then((result) => console.log(result))
+    .catch((err) => console.log(err));
 };
 
 exports.getEditProductPage = (req, res, next) => {
@@ -34,7 +34,7 @@ exports.getEditProductPage = (req, res, next) => {
 
   const prodId = req.params.productId;
 
-  Product.findById(prodId, (product) => {
+  Product.findByPk(prodId, (product) => {
     if (!product) return res.redirect("/");
     res.render("admin/edit-product", {
       docTitle: "Edit Product",
