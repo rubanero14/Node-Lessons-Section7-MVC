@@ -53,7 +53,7 @@ exports.postEditProductPage = async (req, res, next) => {
   const updatedPrice = req.body.price;
   const updatedImageUrl = req.body.imageUrl;
   const updatedDesc = req.body.description;
-  await Product.findByPk(prodId)
+  Product.findByPk(prodId)
     .then((product) => {
       product.update({
         title: updatedTitle,
@@ -63,9 +63,8 @@ exports.postEditProductPage = async (req, res, next) => {
       });
       return product.save();
     })
-    .then((result) => console.log("Successfully updated product"))
+    .then(() => res.redirect("/admin/products"))
     .catch((err) => console.log(err));
-  res.redirect("/admin/products");
 };
 
 exports.getProducts = (req, res, next) => {
