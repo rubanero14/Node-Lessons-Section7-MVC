@@ -11,7 +11,7 @@
 .form-control .nest label,
 .form-control .nest input,
 .form-control .nest textarea,
-.form-control .btn {
+.form-control .btn-spec {
   display: block;
   width: 100%;
 }
@@ -30,7 +30,7 @@
   outline-color: #dbc441;
 }
 
-.btn {
+.btn-spec {
   border: 1px solid #dbc441;
   background-color: #dbc441;
   font: inherit;
@@ -42,8 +42,8 @@
   text-align: center;
 }
 
-.btn:active,
-.btn:hover {
+.btn-spec:active,
+.btn-spec:hover {
   border: 1px solid rgba(155, 21, 155, 0.881);
   background-color: rgba(155, 21, 155, 0.881);
   color: #dbc441;

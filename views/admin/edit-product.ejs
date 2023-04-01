@@ -19,7 +19,7 @@
             <% if(editing) { %>
                 <input type="hidden" value="<%= product.id %>" name="productId">
             <% } %>
-            <button class="btn" type="submit"><%- editing ? 'Update' : 'Add' %> Product</button>
+            <button class="btn-spec" type="submit"><%- editing ? 'Update' : 'Add' %> Product</button>
         </div>
     </form>  
 <%- include('../includes/end.ejs') %>

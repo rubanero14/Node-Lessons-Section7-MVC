@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700");
 
 * {
   box-sizing: border-box;
@@ -7,7 +7,7 @@
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 main {
@@ -21,10 +21,6 @@ form {
 
 img {
   max-width: 400px;
-}
-
-.product-detail hr {
-  max-width: 600px;
 }
 
 .product-detail img {
@@ -132,7 +128,7 @@ img {
   background: transparent;
   color: white;
   cursor: pointer;
-  width: 100%
+  width: 100%;
 }
 
 #side-menu-toggle:focus {
@@ -227,13 +223,13 @@ img {
 .w-100 {
   width: 100%;
 }
-  
-  @media (min-width: 768px) {
-    .main-header__nav {
-      display: flex;
-    }
-  
-    #side-menu-toggle {
-      display: none;
-    }
+
+@media (min-width: 768px) {
+  .main-header__nav {
+    display: flex;
   }
+
+  #side-menu-toggle {
+    display: none;
+  }
+}

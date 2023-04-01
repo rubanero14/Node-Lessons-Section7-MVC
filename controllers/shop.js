@@ -27,10 +27,26 @@ exports.getProductsPage = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const productId = req.params.productId;
+  // Using conditional statement with .findAll()
+  // Product.findAll({
+  //   where: {
+  //     id: productId,
+  //   },
+  // })
+  //   .then((products) => {
+  //     res.render("shop/product-detail", {
+  //       product: products[0],
+  //       docTitle: products[0].title,
+  //       path: `/products`,
+  //     });
+  //   })
+  //   .catch((err) => console.log(err));
+
+  // Using .findByPk()
   Product.findByPk(productId)
-    .then(([product]) => {
+    .then((product) => {
       res.render("shop/product-detail", {
-        product: product[0],
+        product: product,
         docTitle: product.title,
         path: `/products`,
       });
