@@ -1,89 +1,93 @@
 .product-form {
-    width: 20rem;
-    max-width: 90%;
+  width: 20rem;
+  max-width: 90%;
 }
 
 .form-control .nest {
-   display: flex;
-   font-size: 15px;
+  display: flex;
+  font-size: 15px;
 }
 
 .form-control .nest label,
 .form-control .nest input,
 .form-control .nest textarea,
 .form-control .btn {
-    display: block;
-    width: 100%;
+  display: block;
+  width: 100%;
 }
 
 .form-control .nest input,
 .form-control .nest textarea {
-   border: 1px solid #dbc441;
-   font: inherit;
-   border-radius: 4px;
-   padding: 5px;
-   margin-bottom: 5px;
+  border: 1px solid #dbc441;
+  font: inherit;
+  border-radius: 4px;
+  padding: 5px;
+  margin-bottom: 5px;
 }
 
-.form-control .nest input:focus, 
+.form-control .nest input:focus,
 .form-control .nest textarea:focus {
-   outline-color: #dbc441;
+  outline-color: #dbc441;
 }
 
 .btn {
-   border: 1px solid #dbc441;
-   background-color: #dbc441;
-   font: inherit;
-   color: #222;
-   border-radius: 4px;
-   cursor: pointer;
-   padding: 5px 10px;
-   text-decoration: none;
-   text-align: center;
+  border: 1px solid #dbc441;
+  background-color: #dbc441;
+  font: inherit;
+  color: #222;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 5px 10px;
+  text-decoration: none;
+  text-align: center;
 }
 
 .btn:active,
 .btn:hover {
-   border: 1px solid rgba(155, 21, 155, 0.881);
-   background-color: rgba(155, 21, 155, 0.881);
-   color: #dbc441;
+  border: 1px solid rgba(155, 21, 155, 0.881);
+  background-color: rgba(155, 21, 155, 0.881);
+  color: #dbc441;
 }
 
 .product-item {
-   width: 20rem;
-   max-width: 95%;
-   margin: 20px 0 5px;
-   min-height: 400px;
-   height: fit-content;
+  width: 25rem;
+  max-width: 95%;
+  margin: 20px 0 5px;
+  min-height: 400px;
+  height: fit-content;
 }
 
 .product__title {
-   font-size: 1.2rem;
-   text-align: center;
+  font-size: 1.2rem;
+  text-align: center;
 }
 
 .product__price {
-   text-align: center;
-   color: #4d4d4d;
-   margin-bottom: 0.5rem;
+  text-align: center;
+  color: #4d4d4d;
+  margin-bottom: 0.5rem;
 }
 
 .product__description {
-   text-align: center;
+  text-align: center;
 }
 
 .form-control {
-   width: 25%;
+  width: 25%;
+}
+
+img {
+  width: 100%;
 }
 
 @media screen and (max-width: 992px) {
-   .form-control {
-      width: 50%;
-   }
+  .form-control {
+    width: 50%;
+  }
 }
 
 @media screen and (max-width: 576px) {
-   .form-control {
-      width: 100%;
-   }
+  .form-control {
+    width: 100%;
+  }
 }

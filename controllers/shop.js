@@ -13,16 +13,16 @@ const Cart = require("../models/cart");
 exports.getProductsPage = (req, res, next) => {
   // since we are getting products array from models/products.js in the callback function below therefore we dont need to declare
   // products variable as above
-  Product.fetchAll()
-    .then(([rows, fieldData]) => {
+  Product.findAll()
+    .then((products) => {
       res.render("shop/product-list", {
         // passing data as key:value pair with key name can be assigned any name and easier to identify
-        products: rows,
+        products: products,
         docTitle: "All Products",
         path: "/products",
       });
     })
-    .catch((err) => console.log(err));
+    .catch((error) => console.log(error));
 };
 
 exports.getProduct = (req, res, next) => {
@@ -39,15 +39,15 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
-  Product.fetchAll()
-    .then(([rows, fieldData]) => {
+  Product.findAll()
+    .then((products) => {
       res.render("shop/index", {
-        products: rows,
+        products: products,
         docTitle: "Shop",
         path: "/",
       });
     })
-    .catch((err) => console.log(err));
+    .catch((error) => console.log(error));
 };
 
 exports.getCart = (req, res, next) => {
