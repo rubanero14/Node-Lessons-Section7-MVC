@@ -34,15 +34,17 @@ exports.getEditProductPage = (req, res, next) => {
 
   const prodId = req.params.productId;
 
-  Product.findByPk(prodId, (product) => {
-    if (!product) return res.redirect("/");
-    res.render("admin/edit-product", {
-      docTitle: "Edit Product",
-      path: "/admin/edit-product",
-      editing: editMode,
-      product: product,
-    });
-  });
+  Product.findByPk(prodId)
+    .then((product) => {
+      if (!product) return res.redirect("/");
+      res.render("admin/edit-product", {
+        docTitle: "Edit Product",
+        path: "/admin/edit-product",
+        editing: editMode,
+        product: product,
+      });
+    })
+    .catch((error) => console.log(error));
 };
 
 exports.postEditProductPage = (req, res, next) => {
@@ -63,10 +65,10 @@ exports.postEditProductPage = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll()
-    .then(([rows, fieldData]) => {
+  Product.findAll()
+    .then((products) => {
       res.render("admin/products", {
-        products: rows,
+        products: products,
         docTitle: "Admin Products",
         path: "/admin/products",
       });
