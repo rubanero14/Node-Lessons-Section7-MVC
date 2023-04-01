@@ -47,20 +47,24 @@ exports.getEditProductPage = (req, res, next) => {
     .catch((error) => console.log(error));
 };
 
-exports.postEditProductPage = (req, res, next) => {
+exports.postEditProductPage = async (req, res, next) => {
   const prodId = req.params.productId;
   const updatedTitle = req.body.title;
   const updatedPrice = req.body.price;
   const updatedImageUrl = req.body.imageUrl;
   const updatedDesc = req.body.description;
-  const updatedProduct = new Product(
-    prodId,
-    updatedTitle,
-    updatedImageUrl,
-    updatedDesc,
-    updatedPrice
-  );
-  updatedProduct.save();
+  await Product.findByPk(prodId)
+    .then((product) => {
+      product.update({
+        title: updatedTitle,
+        price: updatedPrice,
+        imageUrl: updatedImageUrl,
+        description: updatedDesc,
+      });
+      return product.save();
+    })
+    .then((result) => console.log("Successfully updated product"))
+    .catch((err) => console.log(err));
   res.redirect("/admin/products");
 };
 
