@@ -8,6 +8,8 @@ const pageNotFoundController = require("./controllers/404");
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 const sequelize = require("./util/database");
+const Product = require("./models/product");
+const User = require("./models/user");
 
 const app = express();
 // EJS Template Engine Section
@@ -36,10 +38,19 @@ app.use(express.static(path.join(__dirname, "public")));
 // middleware for catching all routes not registered/used and display error 404 message to browser
 app.use(pageNotFoundController.notFoundPage);
 
+// Relation setup for Product with User model for User owned product or listed his/her product
+Product.belongsTo(User, {
+  constraints: true,
+  onDelete: "CASCADE",
+});
+
+// Relation setup for 1 User has many Products
+User.hasMany(Product);
+
 // This code using .sync() translates the model I have defined in database model section in JS object, into SQL table
 sequelize
-  .sync()
-  .then((result) => {
+  .sync({ force: true }) // This will enforce changes of the relational setups into existing tables involved if set to true [Development only, avoid setup force to true in Production]
+  .then(() => {
     // console.log(result);
     // Listen to server short-hand
     app.listen(PORT);
