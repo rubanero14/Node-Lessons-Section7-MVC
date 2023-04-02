@@ -35,6 +35,16 @@ app.use(shopRoutes);
 */
 app.use(express.static(path.join(__dirname, "public")));
 
+// Registering generic middleware to enable User data to be used anywhere in the app upon any incoming requests
+app.use((req, res, next) => {
+  User.findByPk(1)
+    .then((user) => {
+      req.user = user.toJSON(); // storing user data as JSON object inside global Request object under key name 'user', which is created if its not exist
+      next(); // forward to next middleware
+    })
+    .catch((err) => console.log(err));
+});
+
 // middleware for catching all routes not registered/used and display error 404 message to browser
 app.use(pageNotFoundController.notFoundPage);
 
@@ -48,11 +58,26 @@ Product.belongsTo(User, {
 User.hasMany(Product);
 
 // This code using .sync() translates the model I have defined in database model section in JS object, into SQL table
+// NOTE: Middleware only runs when there is an incoming request, as for the other functions such as sequelize config below will be run only during 'npm start'
 sequelize
-  .sync({ force: true }) // This will enforce changes of the relational setups into existing tables involved if set to true [Development only, avoid setup force to true in Production]
+  // .sync({ force: true }) // This will enforce changes of the relational setups into existing tables involved if set to true [Development only, avoid setup force to true in Production]
+  .sync()
+  .then(() => {
+    return User.findByPk(1); // returning here enables forwards to another then block below [Best practice to avoid nested callbacks]
+  })
+  .then((user) => {
+    if (!user) {
+      return User.create({
+        name: "Raj",
+        email: "test@email.com",
+      });
+    }
+    return user;
+  })
   .then(() => {
     // console.log(result);
     // Listen to server short-hand
+    // console.log(user.toJSON()); // .toJSON() method enables stringified data shown as JSON object without other metadatas from sequelize
     app.listen(PORT);
     console.log(`Server online at http://localhost:${PORT}`);
   })
