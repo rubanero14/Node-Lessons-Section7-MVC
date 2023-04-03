@@ -25,6 +25,16 @@ app.set("views", "views");
 // Initiate and use middlewares here
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// Registering generic middleware to enable User data to be used anywhere in the app upon any incoming requests
+app.use((req, res, next) => {
+  User.findByPk(1)
+    .then((user) => {
+      req.user = user; // storing user data as JSON object inside global Request object under key name 'user', which is created if its not exist
+      next(); // forward to next middleware
+    })
+    .catch((err) => console.log(err));
+});
+
 // using outsourced routes from admin.js/shop.js into app.js
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
@@ -34,16 +44,6 @@ app.use(shopRoutes);
     Basically, granting read access to the browser on the folder name passed in as the arguement below
 */
 app.use(express.static(path.join(__dirname, "public")));
-
-// Registering generic middleware to enable User data to be used anywhere in the app upon any incoming requests
-app.use((req, res, next) => {
-  User.findByPk(1)
-    .then((user) => {
-      req.user = user.toJSON(); // storing user data as JSON object inside global Request object under key name 'user', which is created if its not exist
-      next(); // forward to next middleware
-    })
-    .catch((err) => console.log(err));
-});
 
 // middleware for catching all routes not registered/used and display error 404 message to browser
 app.use(pageNotFoundController.notFoundPage);
