@@ -10,6 +10,8 @@ const shopRoutes = require("./routes/shop");
 const sequelize = require("./util/database");
 const Product = require("./models/product");
 const User = require("./models/user");
+const Cart = require("./models/cart");
+const CartItem = require("./models/cart-item");
 
 const app = express();
 // EJS Template Engine Section
@@ -48,6 +50,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // middleware for catching all routes not registered/used and display error 404 message to browser
 app.use(pageNotFoundController.notFoundPage);
 
+//******* DATABASE ASSOCIATIONS *******//
 // Relation setup for Product with User model for User owned product or listed his/her product
 Product.belongsTo(User, {
   constraints: true,
@@ -57,11 +60,18 @@ Product.belongsTo(User, {
 // Relation setup for 1 User has many Products
 User.hasMany(Product);
 
+// Cart related associations
+User.hasOne(Cart);
+Cart.belongsTo(User);
+Cart.belongsToMany(Product, { through: CartItem });
+Product.belongsToMany(Cart, { through: CartItem });
+//******** END CODE *********//
+
 // This code using .sync() translates the model I have defined in database model section in JS object, into SQL table
 // NOTE: Middleware only runs when there is an incoming request, as for the other functions such as sequelize config below will be run only during 'npm start'
 sequelize
-  // .sync({ force: true }) // This will enforce changes of the relational setups into existing tables involved if set to true [Development only, avoid setup force to true in Production]
-  .sync()
+  .sync({ force: true }) // This will enforce changes of the relational setups into existing tables involved if set to true [Development only, avoid setup force to true in Production]
+  //.sync()
   .then(() => {
     return User.findByPk(1); // returning here enables forwards to another then block below [Best practice to avoid nested callbacks]
   })
