@@ -70,8 +70,8 @@ Product.belongsToMany(Cart, { through: CartItem });
 // This code using .sync() translates the model I have defined in database model section in JS object, into SQL table
 // NOTE: Middleware only runs when there is an incoming request, as for the other functions such as sequelize config below will be run only during 'npm start'
 sequelize
-  .sync({ force: true }) // This will enforce changes of the relational setups into existing tables involved if set to true [Development only, avoid setup force to true in Production]
-  //.sync()
+  // .sync({ force: true }) // This will enforce changes of the relational setups into existing tables involved if set to true [Development only, avoid setup force to true in Production]
+  .sync()
   .then(() => {
     return User.findByPk(1); // returning here enables forwards to another then block below [Best practice to avoid nested callbacks]
   })
@@ -84,7 +84,11 @@ sequelize
     }
     return user;
   })
-  .then(() => {
+  .then((user) => {
+    // Create cart for the particular user globally
+    return user.createCart();
+  })
+  .then((cart) => {
     // console.log(result);
     // Listen to server short-hand
     // console.log(user.toJSON()); // .toJSON() method enables stringified data shown as JSON object without other metadatas from sequelize
