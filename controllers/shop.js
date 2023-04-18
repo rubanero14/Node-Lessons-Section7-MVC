@@ -86,7 +86,10 @@ exports.getCart = (req, res, next) => {
 
 exports.postCart = (req, res, next) => {
   const productId = req.body.productId;
+  // Global variable to be accessed by all .then() blocks
   let fetchedCart;
+  // Setting default quantity to 1
+  let newQuantity = 1;
   req.user
     .getCart()
     .then((cart) => {
@@ -101,20 +104,19 @@ exports.postCart = (req, res, next) => {
         product = products[0];
       }
 
-      // Setting default quantity to 1
-      const newQuantity = 1;
       if (product) {
         // if product exist, increase by 1
+        newQuantity = product.cartItem.quantity + 1;
+        return product;
       }
 
       // if no product found, add new one from Product db
-      Product.findByPk(productId)
-        .then((product) => {
-          return fetchedCart.addProduct(product, {
-            through: { quantity: newQuantity },
-          });
-        })
-        .catch((err) => console.log(err));
+      return Product.findByPk(productId);
+    })
+    .then((product) => {
+      return fetchedCart.addProduct(product, {
+        through: { quantity: newQuantity },
+      });
     })
     .then(() => res.redirect("/cart"))
     .catch((err) => console.log(err));

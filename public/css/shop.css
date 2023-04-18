@@ -10,6 +10,21 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
+.product-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+}
+
+.product-list .card {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  padding: 20px;
+  min-width: 200px;
+}
+
 main {
   padding: 1rem;
   margin: auto;
