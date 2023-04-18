@@ -86,10 +86,38 @@ exports.getCart = (req, res, next) => {
 
 exports.postCart = (req, res, next) => {
   const productId = req.body.productId;
-  Product.findByPk(productId, (product) => {
-    Cart.addProduct(productId, product.price);
-    res.redirect("/cart");
-  });
+  let fetchedCart;
+  req.user
+    .getCart()
+    .then((cart) => {
+      // to check if this product already exist in the cart
+      fetchedCart = cart; // to enable other .then() methods to access the fetched cart not only in this .then() method
+      return cart.getProducts({ where: { id: productId } });
+    })
+    .then((products) => {
+      // retrieve the product in cart if exist
+      let product;
+      if (products.length > 0) {
+        product = products[0];
+      }
+
+      // Setting default quantity to 1
+      const newQuantity = 1;
+      if (product) {
+        // if product exist, increase by 1
+      }
+
+      // if no product found, add new one from Product db
+      Product.findByPk(productId)
+        .then((product) => {
+          return fetchedCart.addProduct(product, {
+            through: { quantity: newQuantity },
+          });
+        })
+        .catch((err) => console.log(err));
+    })
+    .then(() => res.redirect("/cart"))
+    .catch((err) => console.log(err));
 };
 
 exports.postCartDeleteProduct = (req, res, next) => {
