@@ -12,6 +12,8 @@ const Product = require("./models/product");
 const User = require("./models/user");
 const Cart = require("./models/cart");
 const CartItem = require("./models/cart-item");
+const Order = require("./models/order");
+const OrderItem = require("./models/order-item");
 
 const app = express();
 // EJS Template Engine Section
@@ -60,11 +62,14 @@ Product.belongsTo(User, {
 // Relation setup for 1 User has many Products
 User.hasMany(Product);
 
-// Cart related associations
+// Cart/Order related associations
 User.hasOne(Cart);
 Cart.belongsTo(User);
 Cart.belongsToMany(Product, { through: CartItem });
 Product.belongsToMany(Cart, { through: CartItem });
+Order.belongsTo(User);
+User.hasMany(Order);
+Order.belongsToMany(Product, { through: OrderItem });
 //******** END CODE *********//
 
 // This code using .sync() translates the model I have defined in database model section in JS object, into SQL table
