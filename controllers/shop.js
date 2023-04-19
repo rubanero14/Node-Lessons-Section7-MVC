@@ -8,7 +8,6 @@
 // const products = [];
 
 const Product = require("../models/product");
-const Cart = require("../models/cart");
 
 exports.getProductsPage = (req, res, next) => {
   // since we are getting products array from models/products.js in the callback function below therefore we dont need to declare
@@ -144,6 +143,32 @@ exports.getOrders = (req, res, next) => {
     docTitle: "Orders",
     path: "/orders",
   });
+};
+
+exports.postOrder = (req, res, next) => {
+  let fetchedProducts;
+  req.user
+    // Get access to the cart
+    .getCart()
+    .then((cart) => {
+      // Get access to the products
+      return cart.getProducts();
+    })
+    .then((products) => {
+      fetchedProducts = products;
+      return req.user.createOrder();
+    })
+    .then((order) => {
+      return order.addProducts(
+        fetchedProducts.map((product) => {
+          // Updating orderItem quantity data same as cartItem quantity data and ship it to order
+          product.orderItem = { quantity: product.cartItem.quantity };
+          return product;
+        })
+      );
+    })
+    .then(() => res.redirect("/orders"))
+    .catch((err) => console.log(err));
 };
 
 exports.getCheckout = (req, res, next) => {

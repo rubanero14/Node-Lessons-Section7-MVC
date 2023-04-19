@@ -2,9 +2,9 @@
 </head>
 
 <%- include('../includes/navigation.ejs') %>
-<main>
-    <% if(products.length > 0){ %>
-        <ul class="product-list">
+
+<% if(products.length > 0){ %>
+        <ul class="product-list mb-3">
             <% products.forEach( product => { %>
                 <li class="card me-3">
                     <p>
@@ -18,8 +18,15 @@
                 </li>
             <% }); %>
         </ul>
-    <% } else { %>
-        <h1>No Products in Cart!</h1>
-    <% } %>
-</main>
+        <div class="row">
+            <div class="col-12 col-md-3">
+                <form action="/create-order" method="POST">
+                    <button class="btn-spec w-100" type="submit">Order Now</button>
+                </form>
+            </div>
+        </div>
+<% } else { %>
+    <h1>No Products in Cart!</h1>
+<% } %>
+
 <%- include('../includes/end.ejs') %>

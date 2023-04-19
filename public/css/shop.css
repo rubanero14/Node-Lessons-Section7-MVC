@@ -26,7 +26,7 @@ body {
 }
 
 main {
-  padding: 1rem;
+  padding: 1rem 56px;
   margin: auto;
 }
 
@@ -246,5 +246,11 @@ img {
 
   #side-menu-toggle {
     display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  main {
+    padding: 1rem 20px;
   }
 }
