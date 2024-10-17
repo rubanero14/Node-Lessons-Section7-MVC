@@ -2,7 +2,23 @@
 </head>
 
 <%- include('../includes/navigation.ejs') %>
-
+<% if(orders.length <= 0) { %>
 <h1>Nothing here!</h1>
-
+<% } else { %>
+    <ul>
+        <% orders.map(order => { %>
+        <li>
+            <h1># <%= order.id %></h1>
+            <ul>
+                <% order.products.map(product => { %>
+                    <li> 
+                        <%= product.title %> (<%= product.orderItem.quantity %>)
+                    </li>
+                <% }); %>  
+            </ul>
+        </li>
+        <% }); %>  
+    </ul>
+    
+<% } %>
 <%- include('../includes/end.ejs') %>
