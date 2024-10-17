@@ -146,26 +146,28 @@ exports.getOrders = (req, res, next) => {
 };
 
 exports.postOrder = (req, res, next) => {
-  let fetchedProducts;
+  let fetchedCart;
   req.user
     // Get access to the cart
     .getCart()
     .then((cart) => {
+      fetchedCart = cart;
+
       // Get access to the products
       return cart.getProducts();
     })
     .then((products) => {
-      fetchedProducts = products;
-      return req.user.createOrder();
+      return req.user.createOrder().then((order) => {
+        // Updating orderItem quantity data same as cartItem quantity data and ship it to order
+        return order.addProducts(
+          products.map((product) => {
+            product.orderItem = { quantity: product.cartItem.quantity };
+          })
+        );
+      });
     })
-    .then((order) => {
-      return order.addProducts(
-        fetchedProducts.map((product) => {
-          // Updating orderItem quantity data same as cartItem quantity data and ship it to order
-          product.orderItem = { quantity: product.cartItem.quantity };
-          return product;
-        })
-      );
+    .then((result) => {
+      return fetchedCart.setProducts(null);
     })
     .then(() => res.redirect("/orders"))
     .catch((err) => console.log(err));
