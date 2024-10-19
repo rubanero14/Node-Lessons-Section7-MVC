@@ -1,3 +1,4 @@
+require("dotenv").config();
 // // Sequelize DB related codes
 // const { Sequelize } = require("sequelize");
 
@@ -11,3 +12,17 @@
 // module.exports = sequelize;
 
 // MongoDB related codes
+const mongoDB = require("mongodb");
+const mongoClient = mongoDB.MongoClient;
+const connectionUri = process.env.MONGO_DB_CONNECTION;
+const mongoConnect = (cb) => {
+  return mongoClient
+    .connect(connectionUri)
+    .then((result) => {
+      console.log("Mongo cluster connected...");
+      cb(result);
+    })
+    .catch((err) => console.log(err));
+};
+
+module.exports = mongoConnect;
