@@ -15,7 +15,11 @@ class Product {
    * A product class method which saves created product into database
    */
   save() {
-    getDatabase;
+    const db = getDatabase();
+    db.collection("products")
+      .insertOne(this)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   }
 }
 

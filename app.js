@@ -43,6 +43,9 @@ app.use((req, res, next) => {
   //     next(); // forward to next middleware
   //   })
   //   .catch((err) => console.log(err));
+
+  // MongoDB related codes
+  next();
 });
 
 // using outsourced routes from admin.js/shop.js into app.js
