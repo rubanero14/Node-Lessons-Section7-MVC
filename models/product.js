@@ -1,5 +1,5 @@
 // MongoDB related codes
-const mongoConnect = require("../util/database");
+const getDatabase = require("../util/database").getDatabase;
 
 class Product {
   constructor(title, price, description, imageUrl) {
@@ -14,7 +14,9 @@ class Product {
    *
    * A product class method which saves created product into database
    */
-  save() {}
+  save() {
+    getDatabase;
+  }
 }
 
 // // Sequelize DB related codes

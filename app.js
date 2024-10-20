@@ -9,7 +9,7 @@ const adminRoutes = require("./routes/admin");
 // const shopRoutes = require("./routes/shop");
 
 // MongoDB related codes
-const mongoConnect = require("./util/database");
+const mongoConnect = require("./util/database").mongoConnect;
 
 // // Sequelize DB related codes
 // const sequelize = require("./util/database");
@@ -111,8 +111,8 @@ app.use(pageNotFoundController.notFoundPage);
 //   });
 
 // MongoDB related codes
-mongoConnect(() => {
+mongoConnect(() =>
   app.listen(PORT, () =>
     console.log(`Server online at http://localhost:${PORT}`)
-  );
-});
+  )
+);

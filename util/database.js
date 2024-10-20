@@ -15,14 +15,32 @@ require("dotenv").config();
 const mongoDB = require("mongodb");
 const mongoClient = mongoDB.MongoClient;
 const connectionUri = process.env.MONGO_DB_CONNECTION;
-const mongoConnect = (cb) => {
+let dbConnection;
+
+// Returns mongodb connection and storing the connection to the database
+const mongoConnect = (fn) => {
   return mongoClient
     .connect(connectionUri)
-    .then((result) => {
+    .then((client) => {
       console.log("Mongo cluster connected...");
-      cb(result);
+
+      // DB connection to mongodb
+      dbConnection = client.db();
+      fn(client);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      throw err;
+    });
 };
 
-module.exports = mongoConnect;
+// Returns access to connected database if it exists
+const getDatabase = () => {
+  if (db) {
+    return db;
+  }
+
+  throw "No database found.";
+};
+
+module.exports = { mongoConnect, getDatabase };
