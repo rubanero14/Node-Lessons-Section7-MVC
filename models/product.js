@@ -1,3 +1,22 @@
+// MongoDB related codes
+const mongoConnect = require("../util/database");
+
+class Product {
+  constructor(title, price, description, imageUrl) {
+    this.title = title;
+    this.price = price;
+    this.description = description;
+    this.imageUrl = imageUrl;
+  }
+
+  /**
+   * Save Product to Database
+   *
+   * A product class method which saves created product into database
+   */
+  save() {}
+}
+
 // // Sequelize DB related codes
 // const Sequelize = require("sequelize");
 
@@ -31,4 +50,4 @@
 //   },
 // });
 
-// module.exports = Product;
+module.exports = Product;

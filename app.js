@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const PORT = process.env.PORT;
 
 const pageNotFoundController = require("./controllers/404");
-// const adminRoutes = require("./routes/admin");
+const adminRoutes = require("./routes/admin");
 // const shopRoutes = require("./routes/shop");
 
 // MongoDB related codes
@@ -46,7 +46,7 @@ app.use((req, res, next) => {
 });
 
 // using outsourced routes from admin.js/shop.js into app.js
-// app.use("/admin", adminRoutes);
+app.use("/admin", adminRoutes);
 // app.use(shopRoutes);
 
 /* 
