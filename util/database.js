@@ -36,8 +36,8 @@ const mongoConnect = (fn) => {
 
 // Returns access to connected database if it exists
 const getDatabase = () => {
-  if (db) {
-    return db;
+  if (dbConnection) {
+    return dbConnection ;
   }
 
   throw "No database found.";
