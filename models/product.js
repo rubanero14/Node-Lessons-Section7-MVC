@@ -14,11 +14,25 @@ class Product {
    *
    * A product class method which saves created product into database
    */
-  async save() {
-    const db = await getDatabase();
-    db.collection("products")
+  save() {
+    const db = getDatabase();
+    return db
+      .collection("products")
       .insertOne(this)
       .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  }
+
+  static fetchAllProducts() {
+    const db = getDatabase();
+    return db
+      .collection("products")
+      .find()
+      .toArray()
+      .then((products) => {
+        console.log(products);
+        return products;
+      })
       .catch((err) => console.log(err));
   }
 }

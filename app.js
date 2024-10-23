@@ -6,7 +6,7 @@ const PORT = process.env.PORT;
 
 const pageNotFoundController = require("./controllers/404");
 const adminRoutes = require("./routes/admin");
-// const shopRoutes = require("./routes/shop");
+const shopRoutes = require("./routes/shop");
 
 // MongoDB related codes
 const mongoConnect = require("./util/database").mongoConnect;
@@ -50,7 +50,7 @@ app.use((req, res, next) => {
 
 // using outsourced routes from admin.js/shop.js into app.js
 app.use("/admin", adminRoutes);
-// app.use(shopRoutes);
+app.use(shopRoutes);
 
 /* 
     This middleware enables serving static files eg: main.css files to browser.

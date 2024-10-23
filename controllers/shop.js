@@ -12,7 +12,21 @@ const Product = require("../models/product");
 exports.getProductsPage = (req, res, next) => {
   // since we are getting products array from models/products.js in the callback function below therefore we dont need to declare
   // products variable as above
-  Product.findAll()
+
+  // // Sequelize DB related codes
+  // Product.findAll()
+  //   .then((products) => {
+  //     res.render("shop/product-list", {
+  //       // passing data as key:value pair with key name can be assigned any name and easier to identify
+  //       products: products,
+  //       docTitle: "All Products",
+  //       path: "/products",
+  //     });
+  //   })
+  //   .catch((error) => console.log(error));
+
+  // MongoDB related codes
+  Product.fetchAllProducts()
     .then((products) => {
       res.render("shop/product-list", {
         // passing data as key:value pair with key name can be assigned any name and easier to identify
@@ -54,7 +68,19 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
-  Product.findAll()
+  // // Sequelize DB related codes
+  // Product.findAll()
+  //   .then((products) => {
+  //     res.render("shop/product-list", {
+  //       // passing data as key:value pair with key name can be assigned any name and easier to identify
+  //       products: products,
+  //       docTitle: "All Products",
+  //       path: "/products",
+  //     });
+  //   })
+  //   .catch((error) => console.log(error));
+
+  Product.fetchAllProducts()
     .then((products) => {
       res.render("shop/index", {
         products: products,
@@ -175,7 +201,7 @@ exports.postOrder = (req, res, next) => {
 
 exports.getOrders = (req, res, next) => {
   req.user
-    .getOrders({include: ['products']})
+    .getOrders({ include: ["products"] })
     .then((orders) => {
       res.render("shop/orders", {
         docTitle: "Ypur Orders",
