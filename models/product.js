@@ -14,8 +14,8 @@ class Product {
    *
    * A product class method which saves created product into database
    */
-  save() {
-    const db = getDatabase();
+  async save() {
+    const db = await getDatabase();
     db.collection("products")
       .insertOne(this)
       .then((res) => console.log(res))
