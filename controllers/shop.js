@@ -40,6 +40,18 @@ exports.getProductsPage = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const productId = req.params.productId;
+  // MongoDB related codes
+  Product.fetchProduct(productId)
+    .then((products) => {
+      res.render("shop/index", {
+        products: products,
+        docTitle: "Shop",
+        path: "/",
+      });
+    })
+    .catch((error) => console.log(error));
+
+  // // Sequelize DB related codes
   // Using conditional statement with .findAll()
   // Product.findAll({
   //   where: {
@@ -56,15 +68,15 @@ exports.getProduct = (req, res, next) => {
   //   .catch((err) => console.log(err));
 
   // Using .findByPk()
-  Product.findByPk(productId)
-    .then((product) => {
-      res.render("shop/product-detail", {
-        product: product,
-        docTitle: product.title,
-        path: `/products`,
-      });
-    })
-    .catch((err) => console.log(err));
+  // Product.findByPk(productId)
+  //   .then((product) => {
+  //     res.render("shop/product-detail", {
+  //       product: product,
+  //       docTitle: product.title,
+  //       path: `/products`,
+  //     });
+  //   })
+  //   .catch((err) => console.log(err));
 };
 
 exports.getIndex = (req, res, next) => {
@@ -80,6 +92,7 @@ exports.getIndex = (req, res, next) => {
   //   })
   //   .catch((error) => console.log(error));
 
+  // MongoDB related codes
   Product.fetchAllProducts()
     .then((products) => {
       res.render("shop/index", {
