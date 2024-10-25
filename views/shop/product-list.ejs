@@ -29,7 +29,7 @@
                             <a href="/products/<%= product._id %>" class="btn-spec w-50">Details</a>
                             <form action="/cart" method="POST">
                                 <input type="hidden" name="productId" value="<%= product._id %>">
-                                <button class="btn-spec  w-50" type="submit">Add to Cart</button>
+                                <button class="btn-spec w-50" type="submit">Add to Cart</button>
                             </form>
                              <!-- 
                                 The form above can be outsourced as reuable component across pages by storing the markup in add-to-cart.ejs inside includes folder
