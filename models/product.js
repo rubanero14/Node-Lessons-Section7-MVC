@@ -3,11 +3,12 @@ const mongodb = require("mongodb");
 const getDatabase = require("../util/database").getDatabase;
 
 class Product {
-  constructor(title, price, description, imageUrl) {
+  constructor(title, price, description, imageUrl, id) {
     this.title = title;
     this.price = price;
     this.description = description;
     this.imageUrl = imageUrl;
+    this._id = id;
   }
 
   /**
@@ -17,6 +18,17 @@ class Product {
    */
   save() {
     const db = getDatabase();
+
+    // Update existing product
+    if (this._id) {
+      return db
+        .collection("products")
+        .updateOne({ _id: new mongodb.ObjectId(this._id) }, { $set: this })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    }
+
+    // Saving new product
     return db
       .collection("products")
       .insertOne(this)

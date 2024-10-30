@@ -26,54 +26,57 @@ exports.postAddNewProductPage = async (req, res, next) => {
     .catch((err) => console.log(err));
 };
 
-// exports.getEditProductPage = (req, res, next) => {
-//   // check/verify for query parameters exist using Express's req.query helper here
-//   const editMode = req.query.edit;
-//   //console.log(req.query.edit)
-//   if (!editMode) return res.redirect("/");
+exports.getEditProductPage = (req, res, next) => {
+  // check/verify for query parameters exist using Express's req.query helper here
+  const editMode = req.query.edit;
+  //console.log(req.query.edit)
+  if (!editMode) return res.redirect("/");
 
-//   const prodId = req.params.productId;
+  const prodId = req.params.productId;
+  // // Sequelize DB related codes
+  // req.user
+  //   .getProducts({
+  //     where: {
+  //       id: prodId, // This is sequelize conditional fetch similar to 'SELECT * FROM TABLE WHERE ID=prodId'
+  //     },
+  //   })
+  // Product.findByPk(prodId)
 
-//   req.user
-//     .getProducts({
-//       where: {
-//         id: prodId, // This is sequelize conditional fetch similar to 'SELECT * FROM TABLE WHERE ID=prodId'
-//       },
-//     })
-//     // Product.findByPk(prodId)
-//     .then((products) => {
-//       const product = products[0];
+  // MongoDB related codes
+  Product.fetchProduct(prodId)
+    .then((product) => {
+      // const product = products[0];
 
-//       if (!product) return res.redirect("/");
-//       res.render("admin/edit-product", {
-//         docTitle: "Edit Product",
-//         path: "/admin/edit-product",
-//         editing: editMode,
-//         product: product,
-//       });
-//     })
-//     .catch((error) => console.log(error));
-// };
+      if (!product) return res.redirect("/");
+      res.render("admin/edit-product", {
+        docTitle: "Edit Product",
+        path: "/admin/edit-product",
+        editing: editMode,
+        product: product,
+      });
+    })
+    .catch((error) => console.log(error));
+};
 
-// exports.postEditProductPage = async (req, res, next) => {
-//   const prodId = req.params.productId;
-//   const updatedTitle = req.body.title;
-//   const updatedPrice = req.body.price;
-//   const updatedImageUrl = req.body.imageUrl;
-//   const updatedDesc = req.body.description;
-//   Product.findByPk(prodId)
-//     .then((product) => {
-//       product.update({
-//         title: updatedTitle,
-//         price: updatedPrice,
-//         imageUrl: updatedImageUrl,
-//         description: updatedDesc,
-//       });
-//       return product.save();
-//     })
-//     .then(() => res.redirect("/admin/products"))
-//     .catch((err) => console.log(err));
-// };
+exports.postEditProductPage = async (req, res, next) => {
+  const prodId = req.params.productId;
+  const updatedTitle = req.body.title;
+  const updatedPrice = req.body.price;
+  const updatedImageUrl = req.body.imageUrl;
+  const updatedDesc = req.body.description;
+  Product.findByPk(prodId)
+    .then((product) => {
+      product.update({
+        title: updatedTitle,
+        price: updatedPrice,
+        imageUrl: updatedImageUrl,
+        description: updatedDesc,
+      });
+      return product.save();
+    })
+    .then(() => res.redirect("/admin/products"))
+    .catch((err) => console.log(err));
+};
 
 exports.getProducts = (req, res, next) => {
   // // Sequelize DB related codes
