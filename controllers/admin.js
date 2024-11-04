@@ -1,6 +1,10 @@
 // Initiate global variable to store and pass data across middleware/routes
 // const products = [];
 
+// MongoDB related codes
+const mongodb = require("mongodb");
+const ObjectId = mongodb.ObjectId;
+
 const Product = require("../models/product");
 
 exports.getAddProductPage = (req, res, next) => {
@@ -64,17 +68,36 @@ exports.postEditProductPage = async (req, res, next) => {
   const updatedPrice = req.body.price;
   const updatedImageUrl = req.body.imageUrl;
   const updatedDesc = req.body.description;
-  Product.findByPk(prodId)
-    .then((product) => {
-      product.update({
-        title: updatedTitle,
-        price: updatedPrice,
-        imageUrl: updatedImageUrl,
-        description: updatedDesc,
-      });
-      return product.save();
+
+  // // Sequelize DB related codes
+  // Product.findByPk(prodId)
+  //   .then((product) => {
+  //     product.update({
+  //       title: updatedTitle,
+  //       price: updatedPrice,
+  //       imageUrl: updatedImageUrl,
+  //       description: updatedDesc,
+  //     });
+  //     return product.save();
+  //   })
+  //   .then(() => res.redirect("/admin/products"))
+  //   .catch((err) => console.log(err));
+
+  // MongoDB related codes
+  const product = new Product(
+    updatedTitle,
+    updatedPrice,
+    updatedDesc,
+    updatedImageUrl,
+    new ObjectId(prodId)
+  );
+
+  product
+    .save()
+    .then(() => {
+      console.log(`Product ${product.title} update successful!`);
+      res.redirect("/admin/products");
     })
-    .then(() => res.redirect("/admin/products"))
     .catch((err) => console.log(err));
 };
 
