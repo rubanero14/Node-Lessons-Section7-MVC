@@ -2,9 +2,6 @@
 // const products = [];
 
 // MongoDB related codes
-const mongodb = require("mongodb");
-const ObjectId = mongodb.ObjectId;
-
 const Product = require("../models/product");
 
 exports.getAddProductPage = (req, res, next) => {
@@ -89,7 +86,7 @@ exports.postEditProductPage = async (req, res, next) => {
     updatedPrice,
     updatedDesc,
     updatedImageUrl,
-    new ObjectId(prodId)
+    prodId
   );
 
   product
