@@ -61,6 +61,15 @@ class Product {
       })
       .catch((err) => console.log(err));
   }
+
+  static deleteById(prodId) {
+    const db = getDatabase();
+    return db
+      .collection("products")
+      .deleteOne({ _id: new mongodb.ObjectId(prodId) })
+      .then(() => console.log("Deleted item: " + prodId + " successful!"))
+      .catch((err) => console.error(err));
+  }
 }
 
 // // Sequelize DB related codes
