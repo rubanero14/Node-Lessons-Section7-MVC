@@ -14,8 +14,8 @@ const mongoConnect = require("./util/database").mongoConnect;
 // // Sequelize DB related codes
 // const sequelize = require("./util/database");
 // const Product = require("./models/product");
-// const User = require("./models/user");
 // const Cart = require("./models/cart");
+const User = require("./models/user");
 // const CartItem = require("./models/cart-item");
 // const Order = require("./models/order");
 // const OrderItem = require("./models/order-item");
@@ -45,7 +45,12 @@ app.use((req, res, next) => {
   //   .catch((err) => console.log(err));
 
   // MongoDB related codes
-  next();
+  User.findUserById("673039f1cfc83ebde175d49e")
+    .then((user) => {
+      req.user = user; // storing user data as JSON object inside global Request object under key name 'user', which is created if its not exist
+      next(); // forward to next middleware
+    })
+    .catch((err) => console.log(err));
 });
 
 // using outsourced routes from admin.js/shop.js into app.js
