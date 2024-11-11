@@ -20,7 +20,14 @@ exports.postAddNewProductPage = async (req, res, next) => {
   // the createProduct() method is special method between both User and Product models
   // The new product creation is wrapped with user profile using this method to associate the product with that particular user id
   // Refer docs: https://sequelize.org/docs/v6/core-concepts/assocs/#foobelongstobar
-  const product = new Product(title, price, description, imageUrl);
+  const product = new Product(
+    title,
+    price,
+    description,
+    imageUrl,
+    null,
+    req.user._id
+  );
   product
     .save()
     .then((result) => res.redirect("/admin/products"))
