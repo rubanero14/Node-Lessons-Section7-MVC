@@ -4,15 +4,34 @@ const getDatabase = require("../util/database").getDatabase;
 let userExist;
 
 class User {
-  constructor(username, email) {
+  constructor(username, email, cart, userId) {
     this.name = username;
     this.email = email;
+    this.cart = cart;
+    this._id = userId;
   }
 
   save() {
     const db = getDatabase();
 
     return db.collection("users").insertOne(this);
+  }
+
+  addToCart(product) {
+    // const cartProduct = this.cart.items.findIndex(
+    //   (item) => item._id === product._id
+    // );
+
+    const updateCart = {
+      items: [{ ...product, quantity: 1 }],
+    };
+    const db = getDatabase();
+    return db
+      .collection("users")
+      .updateOne(
+        { _id: new mongodb.ObjectId(this._id) },
+        { $set: { cart: updateCart } }
+      );
   }
 
   static findUserById(userId) {
