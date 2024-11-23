@@ -23,7 +23,7 @@ class User {
     // );
 
     const updateCart = {
-      items: [{ ...product, quantity: 1 }],
+      items: [{ productId: new mongodb.ObjectId(product._id), quantity: 1 }],
     };
     const db = getDatabase();
     return db

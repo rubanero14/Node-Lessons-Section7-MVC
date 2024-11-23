@@ -47,7 +47,8 @@ app.use((req, res, next) => {
   // MongoDB related codes
   User.findUserById("673039f1cfc83ebde175d49e")
     .then((user) => {
-      req.user = user; // storing user data as JSON object inside global Request object under key name 'user', which is created if its not exist
+      // req.user = user; // storing user data as JSON object inside global Request object under key name 'user', which is created if its not exist
+      req.user = new User(user.name, user.email, user.cart, user._id);
       next(); // forward to next middleware
     })
     .catch((err) => console.log(err));

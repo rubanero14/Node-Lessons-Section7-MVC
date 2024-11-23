@@ -10,8 +10,8 @@ router.get("/", shopController.getIndex);
 // // Registering Cart page route
 // router.get("/cart", shopController.getCart);
 
-// // Registering Cart page route
-// router.post("/cart", shopController.postCart);
+// Registering Cart page route
+router.post("/cart", shopController.postCart);
 
 // // Registering Cart Delete Item page route
 // router.post("/cart-delete-item", shopController.postCartDeleteProduct);

@@ -124,39 +124,45 @@ exports.getCart = (req, res, next) => {
 
 exports.postCart = (req, res, next) => {
   const productId = req.body.productId;
-  // Global variable to be accessed by all .then() blocks
-  let fetchedCart;
-  // Setting default quantity to 1
-  let newQuantity = 1;
-  req.user
-    .getCart()
-    .then((cart) => {
-      // to check if this product already exist in the cart
-      fetchedCart = cart; // to enable other .then() methods to access the fetched cart not only in this .then() method
-      return cart.getProducts({ where: { id: productId } });
-    })
-    .then((products) => {
-      // retrieve the product in cart if exist
-      let product;
-      if (products.length > 0) {
-        product = products[0];
-      }
 
-      if (product) {
-        // if product exist, increase by 1
-        newQuantity = product.cartItem.quantity + 1;
-        return product;
-      }
+  // // Sequelize DB related codes
+  // // Global variable to be accessed by all .then() blocks
+  // let fetchedCart;
+  // // Setting default quantity to 1
+  // let newQuantity = 1;
+  // req.user
+  //   .getCart()
+  //   .then((cart) => {
+  //     // to check if this product already exist in the cart
+  //     fetchedCart = cart; // to enable other .then() methods to access the fetched cart not only in this .then() method
+  //     return cart.getProducts({ where: { id: productId } });
+  //   })
+  //   .then((products) => {
+  //     // retrieve the product in cart if exist
+  //     let product;
+  //     if (products.length > 0) {
+  //       product = products[0];
+  //     }
+  //     if (product) {
+  //       // if product exist, increase by 1
+  //       newQuantity = product.cartItem.quantity + 1;
+  //       return product;
+  //     }
+  //     // if no product found, add new one from Product db
+  //     return Product.findByPk(productId);
+  //   })
+  //   .then((product) => {
+  //     return fetchedCart.addProduct(product, {
+  //       through: { quantity: newQuantity },
+  //     });
+  //   })
+  //   .then(() => res.redirect("/cart"))
+  //   .catch((err) => console.log(err));
 
-      // if no product found, add new one from Product db
-      return Product.findByPk(productId);
-    })
-    .then((product) => {
-      return fetchedCart.addProduct(product, {
-        through: { quantity: newQuantity },
-      });
-    })
-    .then(() => res.redirect("/cart"))
+  // MongoDB related codes
+  Product.fetchProduct(productId)
+    .then((product) => req.user.addToCart(product))
+    .then((result) => console.log(result))
     .catch((err) => console.log(err));
 };
 
